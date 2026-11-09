@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>File Vault</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+    <!-- ===================== SCREEN: UPLOAD ===================== -->
+    <section id="screen-upload" class="screen active">
+        <h1 class="brand-title">FILE VAULT</h1>
+        <p class="eyebrow">Upload</p>
+        <div class="divider"></div>
+
+        <div class="button-group">
+            <label for="fileInput" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                <span>Select files</span>
+                <input type="file" id="fileInput" multiple hidden>
+            </label>
+            <label for="folderInput" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                <span>Select folder</span>
+                <input type="file" id="folderInput" webkitdirectory directory multiple hidden>
+            </label>
+        </div>
+
+        <div class="drop-zone" id="dropZone">
+            <svg class="dz-idle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14.9A5 5 0 0 1 6 5.3 6 6 0 0 1 17.7 8H18a4 4 0 0 1 1 7.9"/><path d="M12 12v9"/><path d="m9 15 3-3 3 3"/></svg>
+            <p class="dz-idle">drag &amp; drop files or folders here</p>
+            <p class="dz-release">Release to upload</p>
+        </div>
+
+        <div id="queueWrap" class="hidden">
+            <div class="queue-header">
+                <span class="queue-title">Uploading <span id="queueTotal">0</span> files</span>
+                <div class="queue-header-right">
+                    <span class="queue-count"><span id="queueDone">0</span> of <span id="queueTotal2">0</span> done</span>
+                    <button class="btn-small" id="clearDoneBtn" disabled>Clear</button>
+                </div>
+            </div>
+            <div class="upload-list" id="uploadList"></div>
+        </div>
+    </section>
+
+</div>
+
+<!-- ===================== TEMPLATES ===================== -->
+<template id="uploadItemTemplate">
+    <div class="upload-item">
+        <div class="item-top">
+            <div class="file-icon"></div>
+            <div class="item-meta">
+                <span class="item-name"></span>
+                <span class="item-sub"></span>
+            </div>
+            <button class="icon-btn rename-btn" title="Rename file" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </button>
+            <span class="item-percent">0%</span>
+        </div>
+        <div class="rename-row hidden">
+            <input type="text" class="rename-input" spellcheck="false" autocomplete="off">
+            <button class="btn-small rename-save" type="button">Save</button>
+            <button class="btn-small rename-cancel" type="button">Cancel</button>
+        </div>
+        <div class="progress-container"><div class="progress-bar"></div></div>
+        <div class="stat-row"></div>
+        <div class="error-slot"></div>
+        <div class="conflict-slot"></div>
+        <div class="item-actions">
+            <button class="btn-small pause-btn">Pause</button>
+            <button class="btn-small resume-btn hidden">Resume</button>
+            <button class="btn-small danger cancel-btn">Cancel</button>
+        </div>
+    </div>
+</template>
+
+<template id="previewCardTemplate">
+    <div class="upload-item preview-card">
+        <div class="preview-body">
+            <div class="preview-thumb"></div>
+            <div class="preview-info">
+                <span class="preview-name"></span>
+                <div class="preview-badges">
+                    <span class="badge-type"></span>
+                    <span class="badge-size"></span>
+                </div>
+                <div class="preview-status">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    <span>Uploaded just now</span>
+                </div>
+            </div>
+        </div>
+        <div class="preview-actions">
+            <button class="replace-btn"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.5 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.5 15"/></svg>Replace</button>
+            <button class="remove-btn danger"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>Remove</button>
+        </div>
+    </div>
+</template>
+
+<script src="script.js"></script>
+</body>
+</html>
